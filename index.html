@@ -21,21 +21,21 @@
     const loadedLibs = {}
     let counter = 0
 
-    const loadAsync = function(lib) {
-      var http = new XMLHttpRequest()
-      http.open("GET", libs[lib], true)
+    const loadAsync = lib => {
+      const http = new XMLHttpRequest()
+      http.open("GET", libs[lib])
       http.onload = () => {
         loadedLibs[lib] = http.responseText
         if (++counter == Object.keys(libs).length) startScripts()
       }
       http.send()
     }
-    const startScripts = function() {
-      for (var lib in libs) eval(loadedLibs[lib])
+    const startScripts = () => {
+      for (const lib in libs) eval(loadedLibs[lib])
       console.log("allLoaded")
     }
 
-    for (var lib in libs) loadAsync(lib)
+    for (const lib in libs) loadAsync(lib)
   </script>
 </body>
 
